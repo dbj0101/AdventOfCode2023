@@ -4,7 +4,8 @@ let data = process.cwd() + dir + "/data.txt";
 
 let fs = require("fs");
 let inStr = fs.readFileSync(testdata).toString("utf-8");
-//inStr = fs.readFileSync(data).toString("utf-8");
+//
+inStr = fs.readFileSync(data).toString("utf-8");
 
 let inData = inStr.split("\n");
 
@@ -13,11 +14,13 @@ function checkToAddAdjacent(item) {
   if (symIndex.has(item.rowindex - 1)) {
     for (idx of symIndex.get(item.rowindex - 1)) {
       if (idx <= item.maxIndex + 1 && idx >= item.minIndex - 1) {
-        // console.log(
-        //   "Adjacent on row ABOVE:",
-        //   item.strVal,
-        //   `(row - ${item.rowindex + 1})`
-        // );
+        console.log(
+          "Adjacent on row ABOVE:",
+          item.strVal,
+          `(row - ${item.rowindex + 1})`
+        );
+
+        //console.log(item.strVal);
         return Math.abs(Number(item.strVal));
       }
     }
@@ -25,11 +28,13 @@ function checkToAddAdjacent(item) {
   //check current row
   for (idx of symIndex.get(item.rowindex)) {
     if (idx + 1 === item.minIndex || idx - 1 === item.maxIndex) {
-      // console.log(
-      //   "Adjacent on SAME row:",
-      //   item.strVal,
-      //   `(row - ${item.rowindex + 1})`
-      // );
+      console.log(
+        "Adjacent on SAME row:",
+        item.strVal,
+        `(row - ${item.rowindex + 1})`
+      );
+
+      // console.log(item.strVal);
       return Math.abs(Number(item.strVal));
     }
   }
@@ -37,15 +42,18 @@ function checkToAddAdjacent(item) {
   if (symIndex.has(item.rowindex + 1)) {
     for (idx of symIndex.get(item.rowindex + 1)) {
       if (idx <= item.maxIndex + 1 && idx >= item.minIndex - 1) {
-        // console.log(
-        //   "Adjacent on row BELOW:",
-        //   item.strVal,
-        //   `(row - ${item.rowindex + 1})`
-        // );
+        console.log(
+          "Adjacent on row BELOW:",
+          item.strVal,
+          `(row - ${item.rowindex + 1})`
+        );
+
+        // console.log(item.strVal);
         return Math.abs(Number(item.strVal));
       }
     }
   }
+  console.log("DO NOT INCLUDE:", item.strVal, `(row - ${item.rowindex + 1})`);
   return 0;
 }
 
@@ -77,6 +85,9 @@ for ([rowindex, item] of inData.entries()) {
       itemNum["maxIndex"] = i;
     }
   }
+  //last push if number still exists
+  if (itemNum !== null) itemNums.push(itemNum);
+  itemNum = null;
   symIndex.set(rowindex, symArr);
 }
 
