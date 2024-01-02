@@ -1,6 +1,9 @@
-let dir = "/Day1";
-let testdata = process.cwd() + dir + "/testdata.txt";
-let data = process.cwd() + dir + "/data.txt";
+// let dir = "/Day1";
+// let testdata = process.cwd() + dir + "/testdata.txt";
+// let data = process.cwd() + dir + "/data.txt";
+
+let data = __dirname + "/testdata.txt";
+//data = __dirname + "/data.txt";
 
 let fs = require("fs");
 let inStr = fs.readFileSync(data).toString("utf-8");
